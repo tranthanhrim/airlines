@@ -1,0 +1,135 @@
+<div class="container" ng-controller="bookTripController" data-ng-init="vm.init()" layout="column">
+  <div class="container">
+    <label>Book your trip</label>
+  </div>
+
+  <div class="container" style="height: 700px">
+    <ul class="nav nav-pills">
+      <li ng-class="{'active':vm.isSetActive(0)}"><a href="#flight"> Flight </a></li>
+      <li ng-class="{'active':vm.isSetActive(1)}"><a href="#passenger"> Passenger </a></li>
+      <li ng-class="{'active':vm.isSetActive(2)}"><a href="#finish"> Finish </a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="flight" ng-show="vm.isSet(0)" layout="column">
+        <label>Departure</label>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th style="width: 30%">Flight</th>
+              <th style="width: 20%">Depart</th>
+              <th style="width: 15%">From</th>
+              <th style="width: 15%">To</th>
+              <th style="width: 15%">Price</th>
+              <th style="width: 5%">Choice</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.departFlights">
+              <td>{{item.code}}</td>
+              <td>{{item.to.date}} - {{item.to.time}}</td>
+              <td>{{item.to.name}}</td>
+              <td>{{item.from.name}}</td>
+              <td></td>
+              <td><input type="radio" name="radioBtnDeparture"></td>
+            </tr>
+          </tbody>             
+        </table>
+        
+        <label>Return</label>
+        <table class="table table-hover" id="tableReturnFlight">
+          <thead>
+            <tr>
+              <th style="width: 10%">Flight</th>
+              <th style="width: 20%">Depart</th>
+              <th style="width: 25%">From</th>
+              <th style="width: 25%">To</th>
+              <th style="width: 15%">Price</th>
+              <th style="width: 5%">Choice</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>GWML</td>
+              <td>800001</td>
+              <td></td>
+              <td></td>
+              <td class="text-center"><input style="vertical-align: middle;" type="radio" name="optradio"></td>
+            </tr>
+          </tbody>             
+        </table>
+      </div>
+    
+      <div id="passenger" ng-show="vm.isSet(1)">
+        
+        <div class="form-group" layout="column">
+          <div layout="row">
+            <div class="form-group">
+              <label for="txtFirstName" >First name</label>
+              <input type="text" class="form-control" id="txtFirstName">
+            </div>
+            <div class="form-group">
+              <label for="txtLastName">Last name</label>
+              <input type="text" class="form-control" id="txtLastName">
+            </div>
+            <div layout="column">
+              <label>Gender</label>
+              <div>
+                <label class="radio-inline"><input type="radio" name="optradio">Male</label>
+                <label class="radio-inline"><input type="radio" name="optradio">Female</label>
+              </div>
+            </div>
+          </div>
+          
+          <label for="txtBirthday">Birthday</label>
+          <input type="text" class="form-control" id="txtBirthday">
+          
+          
+          <div layout="row">
+            <div class="form-group">
+              <label for="txtEmail" >Email</label>
+              <input type="text" class="form-control" id="txtEmail">
+            </div>
+            <div class="form-group">
+              <label for="txtMobilePhone" >Mobile phone</label>
+              <input type="text" class="form-control" id="txtMobilePhone">
+            </div>
+            <div class="form-group">
+              <label for="txtHomePhone" >Home phone</label>
+              <input type="text" class="form-control" id="txtHomePhone" required>
+            </div>
+          </div>
+          
+          <div layout="row">
+            <div class="form-group">
+              <label for="txtPassport">Passport</label>
+              <input type="text" class="form-control" id="txtPassport">
+            </div>
+            <div class="form-group">
+              <label for="txtNationality" >Nationality</label>
+              <input type="text" class="form-control" id="txtNationality">
+            </div>
+            <div class="form-group">
+              <label for="txtCountry" >Country</label>
+              <input type="text" class="form-control" id="txtCountry" required>
+            </div>
+          </div>
+                      
+        </div>
+      </div>
+      
+      <div id="finish" ng-show="vm.isSet(2)">
+                          
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="container" layout="row" layout-align="end end">
+    <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+    <button type="button" id="btnBack" class="btn btn-default" ng-click="vm.navigate('back')">Back</button>
+    <button type="button" id="btnNext" class="btn btn-default" ng-click="vm.navigate('next')">Next</button>
+    <button type="button" id="btnFinish" class="btn btn-default">Finish</button>
+  </div>
+</div>

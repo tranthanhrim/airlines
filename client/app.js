@@ -1,28 +1,41 @@
-var airlinesApp = angular.module('AirlinesApp', ['ngMaterial','ngRoute']);
+var airlinesApp = angular.module('AirlinesApp', ['ngMaterial','ui.router']); //ngRoute
 
-// airlinesApp.config(function($stateProvider, $urlRouterProvider) {
+airlinesApp.config(function($stateProvider, $urlRouterProvider) {
     
-//     $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/');
     
-//     $stateProvider
-        
-//         // HOME STATES AND NESTED VIEWS ========================================
-//         .state('home', {
-//             url: '/',
-//             templateUrl: './home/home.html',
-//             controller: 'homeController',
-//             controllerAs: 'vm'
-//         });
-// });
-
-airlinesApp.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.
-        when('/',{
+    $stateProvider
+        .state('home', {
+            url: '/',
             templateUrl: './home/home.html',
             controller: 'homeController',
             controllerAs: 'vm'
-        }).
-        otherwise({
-            redirectTo: '/'
+        })
+        .state('booktrip', {
+        	url: '/booktrip',
+        	templateUrl: './book-trip/book-trip.html',
+        	controller: 'bookTripController',
+        	controllerAs: 'vm',
+        	params: {
+        		mode: null,
+        		flights: null
+        	}
         });
-}]);
+});
+
+// airlinesApp.config(['$routeProvider', function($routeProvider) {
+//     $routeProvider.
+//         when('/',{
+//             templateUrl: './home/home.html',
+//             controller: 'homeController',
+//             controllerAs: 'vm'
+//         }).
+//         when('/booktrip',{
+//         	templateUrl: './book-trip/book-trip.html',
+//             controller: 'bookTripController',
+//             controllerAs: 'vm'
+//         }).
+//         otherwise({
+//             redirectTo: '/'
+//         });
+// }]);
