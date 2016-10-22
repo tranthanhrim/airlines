@@ -1,0 +1,56 @@
+.panel{
+  background-color: #1E4072;
+  height: 200px;
+  width: 100%;
+  margin-bottom: 0px;
+}
+.panel h2 {
+  float: left;
+  padding-top: 70px;
+  color: #D8E5F1;
+  font-size: 50px;
+  font-family: "Times New Roman", Times, serif;
+  font-style: normal;
+}
+.dashboard{
+  fill: #65B4CE;
+  padding-top: 40px;
+  padding-left: 30px;
+  float:left;
+}
+
+.sidenav {
+    height: 100%;
+    width: 20%;
+    position: relative;
+    background-color: #FFFFFF;
+    border: 0.5px solid #0288D1;
+    float: left;
+    background-color: #E0E0E0;
+
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav a{
+  padding: 20px;
+  font-size: 23px;
+  font-weight:normal;
+  float: left;
+  color: #6696C8;
+}
+
+.addformatheadding{
+
+  margin-left: 50px;
+  float:left;
+}
+
+.addformatheadding h1{
+  font-family: serif;
+  font-size: 50px;
+  font-style: italic;
+  color: #65B4CE;
+}
