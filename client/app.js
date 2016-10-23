@@ -21,6 +21,16 @@ airlinesApp.config(function($stateProvider, $urlRouterProvider) {
         		flights: null,
         		passengers: null
         	}
+        })
+        .state('yourcode',{
+            url: '/yourcode',
+            templateUrl: './list-passengers/list-passengers.html',
+            controller: 'listPassengersController',
+            controllerAs: 'vm',
+            params: {
+                code: null,
+                passengers: null
+            }
         });
 });
 

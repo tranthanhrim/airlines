@@ -5,6 +5,7 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
 
   vm.limitNumOfChild = limitNumOfChild;
   vm.searchFlight = searchFlight;
+  vm.searchCode = searchCode;
 
   vm.mode = 'isRoundTrip';
 
@@ -24,19 +25,27 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
 
   vm.from = '';
   vm.to = '';
+  var linkAPI = '';
+  vm.yourCode = '';
 
   $('#dateDepart').datepicker();
   $('#dateReturn').datepicker();
 
   vm.init = function(){
-    $http.get('https://webbooking.herokuapp.com/api/v1/departure_airports').then(function(res){
-      console.log(res.data);
-      vm.fromAirports = res.data;
+    $.getJSON("./config.json", function(data) {
+      linkAPI = data.link;
+
+      var apiGetDepartureAirport = linkAPI + '/api/v1/departure_airports';
+      $http.get(apiGetDepartureAirport).then(function(res){
+        console.log(res.data);
+        vm.fromAirports = res.data;
+      });
+
     });
   };
 
   vm.requestArrivalAirport = function(){
-    var request = 'https://webbooking.herokuapp.com/api/v1/arrival_airports?code=' + vm.from.code;
+    var request = linkAPI + '/api/v1/arrival_airports?code=' + vm.from.code;
     $http.get(request).then(function(res){
       console.log(res.data);
       vm.arrivalAirports = res.data;
@@ -47,12 +56,26 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
     //console.log(vm.detailSearch.adult);
   }
 
+  function searchCode(){
+    var apiGetListPassengers = linkAPI + '/api/v1/passengers?code_ticket=' + vm.yourCode;
+    $http.get(apiGetListPassengers).then(function(res){
+        console.log(res.data);
+        vm.fromAirports = res.data;
+      });
+  }
+
   function searchFlight(){
-    // $(':input[required]', $('#formSearch')).each( function () {
-    //   if (this.value.length === 0 || !this.value.trim()) {
-    //       return;
-    //   }
-    // });
+    var isHaveFieldBlank = false;
+    $(':input[required]', $('#formSearch')).each( function () {
+      if (this.value.length === 0 || this.value.trim() === '') {
+          isHaveFieldBlank = true;
+      }
+    });
+
+    // if(isHaveFieldBlank === true){
+    //   return;
+    // }
+
     $('#bookTicket').modal('hide');
 
     // console.log('hihi');
@@ -148,9 +171,9 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
     //   $state.go('booktrip', {mode: vm.mode, flights: response, passengers: dataPassengers})
     // });
     if(vm.mode === 'isOneWay'){
-      url = 'https://webbooking.herokuapp.com/api/v1/flights/oneway';
+      url = linkAPI + '/api/v1/flights/oneway';
     }else{
-      url = 'https://webbooking.herokuapp.com/api/v1/flights/roundtrip';
+      url = linkAPI + '/api/v1/flights/roundtrip';
     }
 
     $.ajax({
@@ -162,9 +185,12 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
       success: function(data, textStatus, jqXHR){
         console.log(data);
         var dataPassengers = {
-          'adult': vm.detailSearch.adult,
-          'children': vm.detailSearch.children,
-          'infan': vm.detailSearch.infan
+          // 'adult': vm.detailSearch.adult,
+          // 'children': vm.detailSearch.children,
+          // 'infan': vm.detailSearch.infan
+          'adult': 1,
+          'children': 0,
+          'infan': 0
         };
         $state.go('booktrip', {mode: vm.mode, flights: data, passengers: dataPassengers});
       },
@@ -198,7 +224,7 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
         'dep_airport_code': 'UIH',
         'arr_airport_code': 'SGN',
         'depart': '10/11/2016',
-        'return': '12/11/2016',
+        'return': '15/11/2016',
         'passengers': [
           {
             'adult': 1
