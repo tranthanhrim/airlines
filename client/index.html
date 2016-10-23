@@ -20,14 +20,32 @@
 </head>
 <body ng-app="AirlinesApp">
 
-	<div class="container">
-		Welcome to hehehe
+	<div class="container" layout="row" style="padding-top: 20px; margin-bottom: 30px">
+		<div layout="row" layout-align="start center">
+      <img src="./img/VNA_logo_vn.png" height="70%" width="60%">
+    </div>
+    <div layout="row" layout-align="end start">
+      <img src="./img/logo_lotusmiles-2x.png">
+      <button type="button" class="btn btn-default" style="border:0;">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </div>
 	</div>
 
-  <div ui-view></div>
+  <div ui-view style="margin-bottom: 30px"></div>
 
-	<div class="container">
-		
+	<div class="container-fluid" layout="row" style="background-color:#0685aa">
+		<div class="container" layout="column" layout-align="center start">
+      <p class="text-warning">About us</p>
+      <div></div>
+      <p style="color: white">Our story</p>
+      <p style="color: white">Our People</p>
+      <p style="color: white">Subsidiaries & Partners</p>
+      <p style="color: white">Press Room</p>
+      <p style="color: white">Investor Relations</p>
+      <p style="color: white">Procurement</p>
+      <p style="color: white">Careers With Us</p>
+    </div>
 	</div>
 
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>

@@ -18,7 +18,8 @@ airlinesApp.config(function($stateProvider, $urlRouterProvider) {
         	controllerAs: 'vm',
         	params: {
         		mode: null,
-        		flights: null
+        		flights: null,
+        		passengers: null
         	}
         });
 });
