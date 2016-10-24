@@ -6,6 +6,7 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
   vm.limitNumOfChild = limitNumOfChild;
   vm.searchFlight = searchFlight;
   vm.searchCode = searchCode;
+  vm.submitCode = submitCode;
 
   vm.mode = 'isRoundTrip';
 
@@ -27,20 +28,30 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
   vm.to = '';
   var linkAPI = '';
   vm.yourCode = '';
+  vm.yourCodeNeedSubmit ='';
 
   $('#dateDepart').datepicker();
   $('#dateReturn').datepicker();
 
   vm.init = function(){
-    $.getJSON("./config.json", function(data) {
-      linkAPI = data.link;
+    // $.getJSON("./config.json", function(data) {
+    //   console.log(data);
+    //   linkAPI = data;
+    // });
 
-      var apiGetDepartureAirport = linkAPI + '/api/v1/departure_airports';
-      $http.get(apiGetDepartureAirport).then(function(res){
-        console.log(res.data);
-        vm.fromAirports = res.data;
-      });
+    $.ajax({
+      type: "GET" ,
+      url: "./config.xml" ,
+      dataType: "xml" ,
+      success: function(xml) {
+        linkAPI = $(xml).find('api').text();
 
+        var apiGetDepartureAirport = linkAPI + '/api/v1/departure_airports';
+        $http.get(apiGetDepartureAirport).then(function(res){
+          console.log(res.data);
+          vm.fromAirports = res.data;
+        });
+      }
     });
   };
 
@@ -59,9 +70,33 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
   function searchCode(){
     var apiGetListPassengers = linkAPI + '/api/v1/passengers?code_ticket=' + vm.yourCode;
     $http.get(apiGetListPassengers).then(function(res){
-        console.log(res.data);
-        vm.fromAirports = res.data;
-      });
+      console.log(res.data);
+      if(res.data.passengers !== null){
+        $state.go('yourcode', {code: vm.yourCode, passengers: res.data.passengers});
+      }
+    });
+  }
+
+  function submitCode(){
+    var apiSubmitCode = linkAPI + '/api/v1/submition_ticket';
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: apiSubmitCode,
+      dataType: 'json',
+      data: JSON.stringify({
+        'code_booking': vm.yourCodeNeedSubmit
+      }),
+      success: function(data, textStatus, jqXHR){
+        console.log(data);
+        $state.go('home');
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+      }
+    });
   }
 
   function searchFlight(){
@@ -78,8 +113,6 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
 
     $('#bookTicket').modal('hide');
 
-    // console.log('hihi');
-    // console.log(dataToJSON());
     var data = {
       "dep_airport_code": 'SGN',
       "arr_airport_code": 'UIH',
@@ -97,84 +130,13 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
 
     var url = '';
 
-    // if(vm.mode === 'isRoundTrip'){
-    //   url = 'https://webbooking.herokuapp.com/api/v1/destinations/roundtrip';
-    //   data = {
-    //     "dep_airport_code": 'UIH',
-    //     "arr_airport_code": 'SGN',
-    //     "depart": '10/11/2016',
-    //     "return": '17/11/2016',
-    //     "passengers":[
-    //       {
-    //         "adult": '1'
-    //       },{
-    //         "children": '0'
-    //       },{
-    //         "infan": '0'
-    //       }
-    //     ]
-    //   }
-    // }
-    // else{
-    //   url = 'https://webbooking.herokuapp.com/api/v1/flights/oneway';
-    //   data = {
-    //     "dep_airport_code": 'UIH',
-    //     "arr_airport_code": 'SGN',
-    //     "depart": '10/11/2016',
-    //     "passengers":[
-    //       {
-    //         "adult": '1'
-    //       },{
-    //         "children": '0'
-    //       },{
-    //         "infan": '0'
-    //       }
-    //     ]
-    //   }
-    // }
-
-    // $http({
-    //   method: 'POST',
-    //   url: url,
-    //   headers: {
-    //     'Content-Type': 'application/x-www-form-urlencoded' // Note the appropriate header
-    //   },
-    //   transformRequest: function(obj) {
-    //       var str = [];
-    //       for(var p in obj)
-    //       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-    //       return str.join("&");
-    //   },
-    //   // data: {
-    //   //   dep_airport_code: 'SGN',
-    //   //   arr_airport_code: 'UIH',
-    //   //   depart: '15/11/2016',
-    //   //   passengers:[
-    //   //     {
-    //   //       "adult": 1
-    //   //     },{
-    //   //       "children": 0
-    //   //     },{
-    //   //       "infan": 0
-    //   //     }
-    //   //   ]         
-    //   // },
-    //   data: data
-    // })
-    // .success(function(response){
-    //   console.log(response);     
-    //   var dataPassengers = {
-    //     'adult': vm.detailSearch.adult,
-    //     'children': vm.detailSearch.children,
-    //     'infan': vm.detailSearch.infan
-    //   }
-    //   $state.go('booktrip', {mode: vm.mode, flights: response, passengers: dataPassengers})
-    // });
     if(vm.mode === 'isOneWay'){
       url = linkAPI + '/api/v1/flights/oneway';
     }else{
       url = linkAPI + '/api/v1/flights/roundtrip';
     }
+
+    console.log(dataSearchFlightToJSON());
 
     $.ajax({
       type: 'POST',
@@ -185,12 +147,12 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
       success: function(data, textStatus, jqXHR){
         console.log(data);
         var dataPassengers = {
-          // 'adult': vm.detailSearch.adult,
-          // 'children': vm.detailSearch.children,
-          // 'infan': vm.detailSearch.infan
-          'adult': 1,
-          'children': 0,
-          'infan': 0
+          'adult': vm.detailSearch.adult,
+          'children': vm.detailSearch.children,
+          'infan': vm.detailSearch.infan
+          // 'adult': 1,
+          // 'children': 0,
+          // 'infan': 0
         };
         $state.go('booktrip', {mode: vm.mode, flights: data, passengers: dataPassengers});
       },
@@ -201,42 +163,78 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
       }
     });
   }
-  
+
   function dataSearchFlightToJSON(){
     if(vm.mode === 'isOneWay'){
       return JSON.stringify({
-        'dep_airport_code': 'UIH',
-        'arr_airport_code': 'SGN',
-        'depart': '10/11/2016',
+        'dep_airport_code': vm.from.code,
+        'arr_airport_code': vm.to.code,
+        'depart': vm.detailSearch.depart,
         'passengers': [
           {
-            'adult': 1
+            'adult': vm.detailSearch.adult
           },{
-            'children': 0
+            'children': vm.detailSearch.children
           },{
-            'infan': 0
+            'infan': vm.detailSearch.infan
           }
         ]
       });
     }
     else{
       return JSON.stringify({
-        'dep_airport_code': 'UIH',
-        'arr_airport_code': 'SGN',
-        'depart': '10/11/2016',
-        'return': '15/11/2016',
+        'dep_airport_code': vm.from.code,
+        'arr_airport_code': vm.to.code,
+        'depart': vm.detailSearch.depart,
+        'return': vm.detailSearch.return,
         'passengers': [
           {
-            'adult': 1
+            'adult': vm.detailSearch.adult
           },{
-            'children': 0
+            'children': vm.detailSearch.children
           },{
-            'infan': 0
+            'infan': vm.detailSearch.infan
           }
         ]
       });
     }
   }
+
+  // function dataSearchFlightToJSON(){
+  //   if(vm.mode === 'isOneWay'){
+  //     return JSON.stringify({
+  //       'dep_airport_code': 'UIH',
+  //       'arr_airport_code': 'SGN',
+  //       'depart': '10/11/2016',
+  //       'passengers': [
+  //         {
+  //           'adult': 1
+  //         },{
+  //           'children': 0
+  //         },{
+  //           'infan': 0
+  //         }
+  //       ]
+  //     });
+  //   }
+  //   else{
+  //     return JSON.stringify({
+  //       'dep_airport_code': 'UIH',
+  //       'arr_airport_code': 'SGN',
+  //       'depart': '10/11/2016',
+  //       'return': '15/11/2016',
+  //       'passengers': [
+  //         {
+  //           'adult': 1
+  //         },{
+  //           'children': 0
+  //         },{
+  //           'infan': 0
+  //         }
+  //       ]
+  //     });
+  //   }
+  // }
 
   $("input[name='round']").change(function(){
     if ($("input[name='round']:checked").val() === "isRoundTrip"){

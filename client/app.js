@@ -33,20 +33,3 @@ airlinesApp.config(function($stateProvider, $urlRouterProvider) {
             }
         });
 });
-
-// airlinesApp.config(['$routeProvider', function($routeProvider) {
-//     $routeProvider.
-//         when('/',{
-//             templateUrl: './home/home.html',
-//             controller: 'homeController',
-//             controllerAs: 'vm'
-//         }).
-//         when('/booktrip',{
-//         	templateUrl: './book-trip/book-trip.html',
-//             controller: 'bookTripController',
-//             controllerAs: 'vm'
-//         }).
-//         otherwise({
-//             redirectTo: '/'
-//         });
-// }]);

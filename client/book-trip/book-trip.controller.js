@@ -1,6 +1,6 @@
 'use strict';
 
-airlinesApp.controller("bookTripController", function($scope, $http, $stateParams) {
+airlinesApp.controller("bookTripController", function($scope, $http,$state, $stateParams) {
     var vm = this;
     vm.tab = 0;
     vm.mode = '';
@@ -41,8 +41,13 @@ airlinesApp.controller("bookTripController", function($scope, $http, $stateParam
     vm.init = function(){
     	$('#dateOfBirth').datepicker();
     	$('#expiredDay').datepicker();
-		$.getJSON("./config.json", function(data) {
-			linkAPI = data.link;
+
+	    $.ajax({
+	      type: "GET" ,
+	      url: "./config.xml" ,
+	      dataType: "xml" ,
+	      success: function(xml) {
+	        linkAPI = $(xml).find('api').text();
 
 	    	vm.mode = $stateParams.mode;
 			vm.typePassengers = $stateParams.passengers;
@@ -74,8 +79,12 @@ airlinesApp.controller("bookTripController", function($scope, $http, $stateParam
 				vm.returnFlights = $stateParams.flights.return;
 				apiUrlTicket = linkAPI + '/api/v1/tickets/roundtrip';
 			}
-			
-		});
+	      }
+	    });
+
+		// $.getJSON("./config.json", function(data) {
+		// 	linkAPI = data.link;			
+		// });
 
     	$http.get('https://restcountries.eu/rest/v1/all').then(function(res){
 	      console.log(res.data);
@@ -133,7 +142,7 @@ airlinesApp.controller("bookTripController", function($scope, $http, $stateParam
 			    });	
 			}
 
-			if(vm.tab<1){
+			if(vm.tab<2){
 				vm.tab++;
 				//$('.nav-pills li:eq("'+ vm.tabId +'") a').tab('show');
 			}
@@ -157,13 +166,12 @@ airlinesApp.controller("bookTripController", function($scope, $http, $stateParam
 		return vm.mode === 'isOneWay';
 	}
 
+	vm.checkSeat = function(param){
+		return param == 0;
+	}
+
 	vm.finishBookTrip = function(){
-	    // $(':input[required]', $('#formSearch')).each( function () {
-	    //   if (this.value.length === 0 || !this.value.trim()) {
-	    //       console.log('hihi');
-	    //   }
-	    // });
-	    console.log(vm.subPassengers.fields);
+	    $state.go('home');
 	}
 
 	vm.setDepartFlight= function(paramFlight, paramClass){
