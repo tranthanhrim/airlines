@@ -31,16 +31,23 @@
                 <td>{{item.from.date}} - {{item.from.time}}</td>
                 <td>{{item.from.name}}</td>
                 <td>{{item.to.name}}</td>
-                <td style="text-align: center; vertical-align: middle;">
-                  <p class="text-danger" style="display: block;" ng-hide="!vm.checkSeat(item.class[1].seats)">Soldout</p>
-                  <input type="radio" name="radioBtnDeparture" ng-value="item" ng-click="vm.setDepartFlight(item,item.class[1].code)" ng-disabled="vm.checkSeat(item.class[1].seats)">
+                <td style="text-align: center; vertical-align: middle;" ng-if="item.class[1].seats != 0">
+                  <input type="radio" name="radioBtnDeparture" ng-value="item" ng-click="vm.setDepartFlight(item,item.class[1].code)" >
                   <p class="text-primary" style="display: block;">{{item.class[1].price}}</p>
                 </td>
-                <td style="text-align: center; vertical-align: middle;">
-                  <p class="text-danger" style="display: block;" ng-hide="!vm.checkSeat(item.class[0].seats)">Soldout</p>
-                  <input type="radio" name="radioBtnDeparture" ng-value="item" ng-click="vm.setDepartFlight(item,item.class[0].code)" ng-disabled="vm.checkSeat(item.class[0].seats)">
+				<td style="text-align: center; vertical-align: middle;" ng-if="item.class[1].seats == 0">
+                  <p class="text-primary" style="display: block;">Soldout</p>
+                </td>
+				
+                <td style="text-align: center; vertical-align: middle;" ng-if="item.class[0].seats != 0">
+                  <input type="radio" name="radioBtnDeparture" ng-value="item" ng-click="vm.setDepartFlight(item,item.class[0].code)" >
                   <p class="text-primary" style="display: block;">{{item.class[0].price}}</p>
                 </td>
+				<td style="text-align: center; vertical-align: middle;" ng-if="item.class[0].seats == 0">
+                  <input type="radio" name="radioBtnDeparture" ng-value="item" ng-click="vm.setDepartFlight(item,item.class[0].code)" >
+                  <p class="text-primary" style="display: block;">Soldout</p>
+                </td>
+				
               </tr>
             </tbody>             
           </table>

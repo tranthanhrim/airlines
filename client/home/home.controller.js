@@ -30,8 +30,8 @@ airlinesApp.controller('homeController', function($scope,$http,$state) {
   vm.yourCode = '';
   vm.yourCodeNeedSubmit ='';
 
-  $('#dateDepart').datepicker();
-  $('#dateReturn').datepicker();
+  $('#dateDepart').datepicker({ dateFormat: 'dd/mm/yy' });
+  $('#dateReturn').datepicker({ dateFormat: 'dd/mm/yy' });
 
   vm.init = function(){
     // $.getJSON("./config.json", function(data) {
