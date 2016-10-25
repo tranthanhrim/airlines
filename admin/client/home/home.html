@@ -1,0 +1,124 @@
+<div class="container" ng-controller="homeController" data-ng-init="vm.init()">
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#bookTicket">{{vm.Hello}}</button>
+
+  <p>Date: <input type="text" id="datepicker"></p>
+
+  <div id="bookTicket" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">BOOK YOUR TRIP</h4>
+        </div>
+        <div class="modal-body">
+          <form id="formSearch">
+            <div layout="column">
+              <div layout="row flex">
+                <div class="btn-group">
+                  <label class="radio-inline"><input type="radio" name="round" ng-model="vm.mode" value="isRoundTrip" ng-checked="true">Round trip</label>
+                  <label class="radio-inline"><input type="radio" name="round" ng-model="vm.mode" value="isOneWay">One way</label>
+                </div>
+              </div>
+
+              <div layout="row" flex>
+                <div class="form-group" flex="45">
+                  <!-- <label for="origin">Origin</label> -->
+                  <select class="form-control" ng-options="item as item.name for item in vm.fromAirports"
+                  ng-model="vm.from" ng-change="vm.requestArrivalAirport()">
+                    <option disabled selected value><p class="text-primary"><h6>From</h6></p></option>
+                  </select>    	
+                </div>
+                <div flex="10"></div>
+                <div class="form-group" flex="45">
+                  <!-- <label for="destination">Destination</label> -->
+                  <select class="form-control" ng-options="item as item.name for item in vm.arrivalAirports" 
+                  ng-model="vm.to">
+                    <option disabled selected value>To</option>
+                  </select>		        	
+                </div>
+              </div>
+
+              <div layout="row" flex>
+                <div class="form-group" flex="45">
+                  <label for="dateDepart">Depart</label>
+                  <input type="text" class="form-control" id="dateDepart" ng-model="vm.detailSearch.depart" required>
+                </div>
+                <div flex="10"></div>
+                <div id="return" class="form-group" flex="45">
+                  <label for="dateReturn">Return</label>
+                  <input type="text" class="form-control" id="dateReturn" ng-model="vm.detailSearch.return" required>
+                </div>
+              </div>
+
+              <div layout="row" flex>
+                <div class="form-group" flex="30">
+                  <!-- <label for="adult">Adult (>=12)</label> -->
+                  <select class="form-control" ng-model="vm.detailSearch.adult" ng-change="vm.limitNumOfChild()" required>
+                    <option disabled selected value>Adult (>=12)</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+                <div flex="5"></div>
+                <div class="form-group" flex="30">
+                  <!-- <label for="children-less-2">Chilren</label> -->
+                  <select class="form-control" ng-model="vm.detailSearch.children" required>
+                    <option disabled selected value> Children (2->12) </option>
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+                <div flex="5"></div>
+                <div class="form-group" flex="30">
+                  <!-- <label for="children-more-2">Children (2->12)</label> -->
+                  <select class="form-control" ng-model="vm.detailSearch.infan" required>
+                    <option disabled selected value> Infan (<=2) </option>
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+              </div>
+
+              <div layout="row" flex layout-align="end end">
+                <button type="button" class="btn btn-primary" ng-click="vm.searchFlight()">Search Flight</button>
+              </div>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+
+    </div>
+  </div>     
+  
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Flight</th>
+        <th>Depart</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Price</th>     
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in data">
+        <td>{{item.flight}}</td>
+        <td>{{item.depart}}</td>
+        <td>{{item.from}}</td>
+        <td>{{item.to}}</td>
+        <td>{{item.price}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

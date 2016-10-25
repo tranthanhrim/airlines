@@ -1,0 +1,52 @@
+<div class="addformatheadding" ng-controller="addFlightRouteCtrler" ng-init="init()">
+  <h1>Thêm chặng bay</h1>
+
+  <form class="form-inline" style="margin-top: 20px;">
+    <div class="form-group">
+      <label for="departairport">Sân bay đi: </label>
+      <select id="departairport" class="form-control" style="width:400px;" ng-options="item as item.name for item in airports"
+         ng-model="from">
+        <option disabled selected value><h1>Sân bay đi</h1></option>
+      </select>
+    </div>
+  </form>
+
+  <form class="form-inline" style="margin-top: 20px;">
+    <div class="form-group">
+      <label for="arrivalairport">Sân bay đến: </label>
+      <select class="form-control" style="width:400px;" ng-options="item as item.name for item in airports"
+        ng-model="to">
+        <option disabled selected value><h1>Sân bay đến</h1></option>
+      </select>
+    </div>
+  </form>
+
+  <form class="form-inline" style="margin-top: 20px;">
+    <div class="form-group">
+      <label for="departdate">Ngày bay đi: </label>
+      <input type="date" class="form-control" style="width:400px;" id="departdate" ng-model="departdate" placeholder="DD/MM/YYYY" required>
+    </div>
+  </form>
+
+  <form class="form-inline" style="margin-top: 20px;">
+    <div class="form-group">
+      <label for="departtime">Thời gian bay đi: </label>
+      <input type="time" class="form-control" style="width:200px;" id="departtime" ng-model="departtime" placeholder="hh:mm" required>
+    </div>
+  </form>
+
+  <form class="form-inline" style="margin-top: 20px;">
+    <div class="form-group">
+      <label for="arrivaldate">Ngày bay đến: </label>
+      <input type="date" class="form-control" style="width:400px;" id="arrivaldate" ng-model="arrivaldate" placeholder="DD/MM/YYYY" required>
+    </div>
+  </form>
+
+  <form class="form-inline" style="margin-top: 20px;">
+    <div class="form-group">
+      <label for="arrivaltime">Thời gian bay đến: </label>
+      <input type="time" class="form-control" style="width:200px;" id="arrivaltime" ng-model="arrivaltime" placeholder="hh:mm" required>
+    </div>
+  </form>
+  <button type="button" class="btn btn-primary" ng-click="addflightRoute()">Thêm</button>
+</div>
