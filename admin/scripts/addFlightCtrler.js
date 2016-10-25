@@ -17,7 +17,7 @@ app.controller('addFlightCtrler', function($scope, $http, $state){
     $scope.normal_seats = '';
     $scope.bussiness_seats = '';
     $scope.taxtype = '';
-
+      
   $scope.init = function(){
     // $http.get('https://webbooking.herokuapp.com/api/v1/admin/airports?type=1').then(function(res){
     //   console.log(res.data);

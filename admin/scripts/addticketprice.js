@@ -27,7 +27,7 @@ app.controller('addticketpriceCtrler', function($scope, $http, $state){
     		$.ajax({
 			   	url: _url_host + 'api/v1/admin/price',
 			   	data: {
-			      'code' : $scope.price_code ,
+			      'code' : $scope.price_code,
 			      'value' : $scope.value
 			   	},
 			   	type: 'post',

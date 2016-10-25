@@ -2,13 +2,14 @@
 
 app.controller('addAirportCtrler', function($scope, $http, $state){
 
-	$scope.airportcode = '';
+	// $scope.airportcode = '';
 	$scope.airportname = '';
-	$scope.area = [];
+	$scope.areas = [];
+	// $scope.area = '';
 	$scope.areacode = '';
 	$scope.areaname = '';
 	$scope.to = ''; 
-	$scope.acode = '';
+
 	$scope.Airports = [];
 
    	$scope.getAirportCode = function(){
@@ -22,8 +23,8 @@ app.controller('addAirportCtrler', function($scope, $http, $state){
 		   },
 		   dataType: 'json',
 		   success: function(data, textStatus) {
-		   	 $scope.airportcode = data.code;
-		   	 console.log($scope.airportcode);
+		   	$("#airportcode").val(data.code);
+
 		   }		   
 		});
     };
@@ -51,32 +52,39 @@ app.controller('addAirportCtrler', function($scope, $http, $state){
 		  
 		   type: 'GET',
 		   error: function() {
-		      
+		     
 		   },
 		   dataType: 'json',
 		   success: function(data) {
-		   	 $scope.area = data;
-		   	 console.log(data);
+		   	 $scope.areas = data;
+		   	 console.log($scope.areas);
 		   }
 		   
 		});
     };
 
     $scope.addAirport = function(){
+    	var t = [];
+    	var temp = {"code" : $scope.to.code};
+    	t.push(temp);
+    	// console.log(t);
+    	// console.log($scope.to.code);
+    	// console.log($('#airportcode').val());
+    	// console.log($scope.airportname);
+    	// console.log($scope.area.code_area);
     	if($scope.price_code != '' & $scope.value != ''){
     		$.ajax({
 			   	url: _url_host + 'api/v1/admin/airports',
 			   	data: {
-			      'code' : $scope.acode,
+			      'code' : $('#airportcode').val(),
 			      'name' : $scope.airportname,
-			      'code_area' : $scope.areacode,
-			      'arrival' : [{"code" : $scope.to.code}]
+			      'code_area' : $scope.area.code_area,
+			      'arrival' : t
 			   	},
 			   	type: 'post',
 			   	error: function(jqXHR, textStatus, errorThrown) {
 			      //show popup loi
-			    	console.log(jqXHR);
-					console.log(textStatus);
+			    	console.log(textStatus);
 					console.log(errorThrown);
 					alert(textStatus);
 
@@ -84,7 +92,7 @@ app.controller('addAirportCtrler', function($scope, $http, $state){
 			   dataType: 'json',
 			   success: function(data, textStatus) {
 			   		console.log(textStatus);
-			   		alert("success");
+			   		alert("successfully");
 			   }
 		   
 			});

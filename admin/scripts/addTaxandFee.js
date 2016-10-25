@@ -5,7 +5,6 @@ app.controller('addTaxCtrler', function($scope, $http, $state){
     $scope.taxes_code = '';
 
     $scope.getTaxesCode = function(){
-    	
     	$.ajax({
 		   url: _url_host + 'api/v1/admin/taxes?type=0',
 		  

@@ -10,24 +10,12 @@ app.controller('addFlightRouteCtrler', function($scope, $http, $state){
     $scope.arrivaltime = '';
 
   $scope.init = function(){
-    
-    $.ajax({
-       url: _url_host + 'api/v1/admin/airports?type=1',
-      
-       type: 'GET',
-       error: function() {
-          
-       },
-       dataType: 'json',
-       success: function(data) {
-        $scope.airports = data;
-        console.log($scope.airports);
-       }
-       
+    $http.get('https://webbooking.herokuapp.com/api/v1/admin/airports?type=1').then(function(res){
+      console.log(res.data);
+      $scope.airports = res.data;
     });
+    
   };
-
-
 
   $scope.addflightRoute = function(){
     console.log($scope.departdate);
