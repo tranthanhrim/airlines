@@ -1,15 +1,19 @@
-<div class="addformatheadding">
-  <h1>Thêm giá vé</h1>
-  <div class="form-group">
-    <label for="pricecode">Mã giá vé: </label>
-    <input class="form-control" id="pricecode" placeholder="Nhập mã">
-  </div>
+<div class="addformatheadding" ng-controller="addticketpriceCtrler" ">
+  	<h1>Thêm giá vé</h1>
+  	<form class="form-inline" style="padding-left: 20px; padding-top:30px;">
+    	<div class="form-group">
+	      	<label for="pricecode" style="width:80px;">Mã giá vé:</label>
+	      	<input type="text" class="form-control" id="pricecode" placeholder="mã giá vé" disabled="true" ng-value="price_code">
+	      	<button type="submit" class="btn btn-info" ng-click="getTaxesCode()">Get price code</button>
+    	</div>
+  	</form>
 
-  <div class="form-group">
-    <label for="value">Giá trị: </label>
-    <input type="number" class="form-control" id="value" placeholder="Nhập giá trị">
-  </div>
-
-  <button type="button" class="btn btn-primary">Thêm</button>
+  	<form class="form-inline" style="padding-left: 20px; padding-top:30px;">
+	    <div class="form-group">
+	      <label for="pricevalue" style="width:80px;">Gia tri:</label>
+	      <input type="text" class="form-control" id="pricevalue" placeholder="Giá trị" ng-model="value">
+	    </div>
+  	</form>
+  	<button type="submit" class="btn btn-primary" style="margin-left: 100px;" ng-click="addPrice()">Thêm</button>
 </div>
 <div ui-view></div>

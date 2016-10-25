@@ -1,16 +1,46 @@
-<div class="addformatheadding">
+<div class="addformatheadding" ng-controller="addAirportCtrler" ng-init="init()">
   <h1>Thêm sân bay</h1>
-  <form class="form-horizontal" style="margin-top: 20px;">
-    <div class="form-group">
-      <label for="airportcode">Mã sân bay: </label>
-      <input class="form-control" style="width: 400px;" id="airportcode" placeholder="Nhập mã">
-    </div>
+  
+    <form class="form-inline" style="padding-left: 20px; padding-top:30px;">
+      <div class="form-group">
+        <label for="airportcode" style="width:80px;">Mã sân bay:</label>
+        <input ng-model="acode" type="text" class="form-control" id="airportcode" placeholder="Mã sân bay" ng-value="airportcode" disabled="true" >
+        <button type="submit" class="btn btn-info" ng-click="getAirportCode()">Get airport code</button>
+      </div>
+    </form>
 
-    <div class="form-group">
-      <label for="airportname">Tên sân bay: </label>
-      <input class="form-control"style="width: 400px;" id="airportname" placeholder="Tên sân bay">
-    </div>
-  </form>
+    <form class="form-inline" style="padding-left: 20px; padding-top:30px;">
+      <div class="form-group">
+        <label for="airportname" style="width:80px;">Tên sân bay:</label>
+        <input type="text" class="form-control" id="airportname" placeholder="Tên sân bay" ng-model="airportname">
+      </div>
+    </form>
 
-  <button type="button" class="btn btn-primary">Thêm</button>
+    <form class="form-inline" style="margin-top: 20px;">
+    	<div class="form-group">
+      		<label for="arrivalairport">Sân bay đến: </label>
+      		<select class="form-control" style="width:400px;" ng-options="item as item.name for item in Airports"
+        		ng-model="to">
+        		<option disabled selected value><h1>Sân bay đến</h1></option>
+      		</select>
+    	</div>
+  	</form>
+
+    <form class="form-inline" style="padding-left: 20px; padding-top:30px;">
+      <label for="areacode" style="width:80px;">Mã vùng:</label>
+      <select class="form-control" style="width:200px;" ng-options="item as item.code_area for item in area"
+                ng-model="areacode">
+          <option disabled selected value><h1>Mã vùng</h1></option>
+      </select>
+    </form>
+
+    <form class="form-inline" style="padding-left: 20px; padding-top:30px;">
+      <label for="areaname" style="width:80px;">Tên vùng:</label>
+      <select class="form-control" style="width:200px;" ng-options="item as item.name_area for item in area"
+                ng-model="areaname">
+          <option disabled selected value><h1>Tên vùng</h1></option>
+      </select>
+    </form>
+
+    <button type="submit" class="btn btn-primary" style="margin-left: 100px;" ng-click="addAirport()">Thêm</button>
 </div>

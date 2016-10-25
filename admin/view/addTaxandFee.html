@@ -1,0 +1,19 @@
+<div class="addformatheadding" ng-controller="addTaxCtrler">
+  <h1>Thêm thuế</h1>
+  <form class="form-inline" style="padding-left: 20px; padding-top:30px;">
+    <div class="form-group">
+      <label for="exampleInputName2" style="width:80px;">Ma thue:</label>
+      <input type="text" class="form-control" id="exampleInputName2" placeholder="ABCDEF" disabled="true" ng-value="taxes_code">
+      <button type="submit" class="btn btn-info" ng-click="getTaxesCode()">Get tax code</button>
+    </div>
+  </form>
+
+  <form class="form-inline" style="padding-left: 20px; padding-top:30px;">
+    <div class="form-group">
+      <label for="exampleInputName2" style="width:80px;">Gia tri:</label>
+      <input type="text" class="form-control" id="exampleInputName2" placeholder="" ng-model="value">
+    </div>
+  </form>
+
+  <button type="submit" class="btn btn-primary" style="margin-left: 100px;" ng-click="addTaxes()">Thêm</button>
+</div>

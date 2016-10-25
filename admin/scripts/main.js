@@ -23,7 +23,12 @@ app.config(function($stateProvider, $urlRouterProvider){
         url: '/addAirport',
         templateUrl: 'view/addAirport.html'
       })
-})
+      .state('taxes', {
+        url: '/taxes',
+        templateUrl: 'view/addTaxandFee.html'
+      });
+
+});
 
 
 

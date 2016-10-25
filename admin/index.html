@@ -1,11 +1,5 @@
 <html lang="en" >
    <head>
-      <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>-->
       <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
 
@@ -20,11 +14,14 @@
 
       <!-- Latest compiled JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
       <script type="text/javascript" src="scripts/main.js"></script>
+      <script type="text/javascript" src="config.js"></script>
       <link rel="stylesheet" href="styles/main.css"></link>
       <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
       <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.1/angular-material.css">
       <link rel="stylesheet" href="https://material.angularjs.org/1.1.1/docs.css">
+
    </head>
    <body ng-app="AdminApp">
       <div class="panel" >
@@ -39,12 +36,15 @@
 
         <a ui-sref="addFlightRoute">Thêm chặng bay</a>
 
-        <a ui-sref="#">Thêm loại thuế và các phí khác</a>
+        <a ui-sref="taxes">Thêm loại thuế và các phí khác</a>
 
         <a ui-sref="addAirport">Thêm sân bay</a>
       </div>
-      <div ui-view>
-      </div>
-
+      <div ui-view></div>
+      <script type="text/javascript" src="scripts/addFlightCtrler.js"></script>
+      <script type="text/javascript" src="scripts/addFlightRoute.js"></script>
+      <script type="text/javascript" src="scripts/addticketprice.js"></script>
+      <script type="text/javascript" src="scripts/addTaxandFee.js"></script>
+      <script type="text/javascript" src="scripts/addAirport.js"></script>
    </body>
 </html>
